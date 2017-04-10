@@ -82,7 +82,7 @@ module.exports = {
         
         
         return page;
-    }
+    },
       
       
     "finish": function() {   
