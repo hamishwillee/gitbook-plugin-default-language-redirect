@@ -67,10 +67,10 @@ module.exports = {
         var redirectConf = this.config.get("pluginsConfig.language-redirect");
         var redirect_language = redirectConf.language || "en";
         //Get current language for iteration of finish() function.
-        var current_language=this.output.root().split('\\').pop();
+        var current_language=this.output.root().split('\\').pop().split('/').pop();
         if (current_language=='_book') {
             current_language='';
-        }
+            }
         
         //Construct redirect file for each page.
         var g = this;
