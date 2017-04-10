@@ -19,12 +19,13 @@ Add this to your **book.json** plugin list:
 
 ## Usage
 
-Configuration for this plugin is specified in book.json in the *pluginsConfig* object, with the key language-redirect. At this time the only configuration variable is the language, which will default to 'en':
+Configuration for this plugin is specified in book.json in the *pluginsConfig* object, with the key language-redirect. At this time the configuration variables are the language (default 'en') and the baseurl (defaults to '/'). The baseurl should end in a forward slash:
 
 ```
 "pluginsConfig": {
     "language-redirect": {
-        "language": "en"
+        "language": "en",
+        "baseurl": "https://hamishwillee.gitbooks.io/px4-user-guide/" 
     }
 }
 ```

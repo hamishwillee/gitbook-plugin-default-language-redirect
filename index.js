@@ -47,7 +47,7 @@ module.exports = {
             current_lang_pages.push(page.path)
         }
         
-        page.content = "# DEBUG \n" + logtext + '\n' + page.content;
+        //page.content = "# DEBUG \n" + logtext + '\n' + page.content;
         //console.log("DEBUG: " + logtext)
         return page;
     },
@@ -67,7 +67,6 @@ module.exports = {
             current_language='';
             }
             
-
         
         
         //Construct redirect file for each page.
@@ -86,12 +85,14 @@ module.exports = {
                 page_path=page_path.split('.')
                 page_path.pop();
                 page_path=page_path.join()+'.html';
-                console.log("FROM Page: ", page_path)
+                //replace page path name to index.html if it is README.html (makes folder links work!)
+                page_path=page_path.replace('README.html','index.html')
+                //console.log("FROM Page: ", page_path)
                 
                 var redirect_page_url = g.output.toURL(page);
                 var redirect_page_url = redirect_base_url + redirect_language + '/' + redirect_page_url;
                 //var redirect_page_url = '/' + redirect_language + '/' + page;
-                console.log("TO Page: ", redirect_page_url )
+                //console.log("TO Page: ", redirect_page_url )
                 g.output.writeFile(page_path, content(redirect_page_url));
             });
         }
