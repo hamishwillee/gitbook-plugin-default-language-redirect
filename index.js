@@ -42,6 +42,8 @@ module.exports = {
           page_path=page_path.split('.')
           page_path.pop();
           page_path=page_path.join()+'.html';
+          
+          page.content =  page.content + '<p>PAGE PATH: ' + page_path + '</p>'; //DEBUGGING
           current_lang_pages.push(page_path)
       }
 
