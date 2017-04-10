@@ -36,7 +36,7 @@ module.exports = {
       
       // For current language save the redirect file name
       if (redirect_language==current_language) {
-          console.log("CURRENT Page: ", page.path )
+          //console.log("CURRENT Page: ", page.path )
           //strip off the .mds and replace with .html (output path)
           page_path=page.path;
           page_path=page_path.split('.')
@@ -65,13 +65,10 @@ module.exports = {
         //Construct redirect file for each page.
         var g = this;
         if (''==current_language) {
-            //This is the root
+            //Current language is '' which means writeFile() create copy pages into root
+            //Otherwise the file gets written relative to the current output langauge path. 
             current_lang_pages.forEach(function(page) {
-                console.log('FROM: ',page);
-              
                 var redirect_page = '/' + redirect_language + '/' + page;
-                console.log('TO: ',redirect_page);
-
                 g.output.writeFile(page, content(redirect_page));
             });
         }
