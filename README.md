@@ -1,21 +1,21 @@
 # gitbook-plugin-language-redirect
 
-Creates a redirect from the root for every page in the specified language.
+Creates a redirect from the root for every page in the specified language. 
 
-If you migrate from a single language to a multi-language system then you'll want all your original URLS to redirect too. 
-This plugin creates a redirect in the root (original URL) for every page in your specified language. 
+This is useful if you're migrating from a single-language to a mulit-language system and want to redirect URLs to that language.
+
 
 ## Installation
 
-Add this to your book.json plugin list:
+Add this to your **book.json** plugin list:
 
+```
 {
     "plugins": [ 
        "language-redirect@git+https://github.com/hamishwillee/gitbook-plugin-default-language-redirect.git" 
        ]
-    
-    
 }
+```
 
 ## Usage
 
