@@ -50,6 +50,40 @@ module.exports = {
       return page;  
       },
       
+     /* THIS IS PURELY A TEST */
+     
+    "page:before": function(page) {
+        page.content = "# Title\n" +page.content;
+        
+        
+              //Get redirect language from config (or 'en' if not specified)
+      var redirectConf = this.config.get("pluginsConfig.language-redirect");
+      var redirect_language = redirectConf.language || "en";
+      
+      // Infer current language using current output root. 
+      // Will either be "_book" (no language) or a language code
+      var current_language=this.output.root().split('\\').pop();
+      if (current_language=='_book') {
+         current_language='';
+         }
+      
+      // For current language save the redirect file name
+      if (redirect_language==current_language) {
+          //console.log("CURRENT Page: ", page.path )
+          //strip off the .mds and replace with .html (output path)
+          page_path=page.path;
+          page_path=page_path.split('.')
+          page_path.pop();
+          page_path=page_path.join()+'.html';
+          
+          page.content =  page.content + '<p>PAGE PATH2222: ' + page_path + '</p>'; //DEBUGGING
+          current_lang_pages.push(page_path)
+      }
+        
+        
+        return page;
+    }
+      
       
     "finish": function() {   
         /* Iterate through the the array of pages. Create redirects for each page in the array, 
