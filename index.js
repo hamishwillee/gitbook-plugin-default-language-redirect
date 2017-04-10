@@ -43,18 +43,12 @@ module.exports = {
       
       // For current language save the redirect file name
         if (redirect_language==current_language) {
-          //console.log("CURRENT Page: ", page.path )
-          //strip off the .mds and replace with .html (output path)
-            page_path=page.path;
-            page_path=page_path.split('.')
-            page_path.pop();
-            page_path=page_path.join()+'.html';
-            logtext += "\npage_path: " + page_path + '\n';
-            current_lang_pages.push(page_path)
+            logtext += "\npage_path: " + page.path + '\n';
+            current_lang_pages.push(page.path)
         }
         
         page.content = "# DEBUG \n" + logtext + '\n' + page.content;
-        console.log("DEBUG: " + logtext)
+        //console.log("DEBUG: " + logtext)
         return page;
     },
       
@@ -66,24 +60,43 @@ module.exports = {
         // Get redirect language from config
         var redirectConf = this.config.get("pluginsConfig.language-redirect");
         var redirect_language = redirectConf.language || "en";
+        var redirect_base_url = redirectConf.baseurl || "/";
         //Get current language for iteration of finish() function.
         var current_language=this.output.root().split('\\').pop().split('/').pop();
         if (current_language=='_book') {
             current_language='';
             }
+            
+
+        
         
         //Construct redirect file for each page.
         var g = this;
+        console.log("CURRENT_LANG: ", current_language)
+        console.log("current_lang_pages: ", current_lang_pages)
+        
+        
         if (''==current_language) {
             //Current language is '' which means writeFile() create copy pages into root
-            //Otherwise the file gets written relative to the current output langauge path. 
+            //Otherwise the file gets written relative to the current output language path. 
             current_lang_pages.forEach(function(page) {
-                var redirect_page = '/' + redirect_language + '/' + page;
-                //console.log("FROM Page: ", page)
-                //console.log("TO Page: ", redirect_page )
-                g.output.writeFile(page, content(redirect_page));
+                
+                //strip off the .mds and replace with .html for output path
+                var page_path=page;
+                page_path=page_path.split('.')
+                page_path.pop();
+                page_path=page_path.join()+'.html';
+                console.log("FROM Page: ", page_path)
+                
+                var redirect_page_url = g.output.toURL(page);
+                var redirect_page_url = redirect_base_url + redirect_language + '/' + redirect_page_url;
+                //var redirect_page_url = '/' + redirect_language + '/' + page;
+                console.log("TO Page: ", redirect_page_url )
+                g.output.writeFile(page_path, content(redirect_page_url));
             });
         }
+        
+        
            
     }  //finish
       
