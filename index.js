@@ -60,12 +60,16 @@ module.exports = {
       var redirectConf = this.config.get("pluginsConfig.language-redirect");
       var redirect_language = redirectConf.language || "en";
       
+      page.content += "\n# REDIR: " + redirect_language + '\n';
+      
       // Infer current language using current output root. 
       // Will either be "_book" (no language) or a language code
       var current_language=this.output.root().split('\\').pop();
       if (current_language=='_book') {
          current_language='';
          }
+         
+      page.content = "# CURR Lange: " + current_language + '\n' +page.content;
       
       // For current language save the redirect file name
       if (redirect_language==current_language) {
