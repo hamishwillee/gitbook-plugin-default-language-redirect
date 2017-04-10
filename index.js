@@ -71,8 +71,8 @@ module.exports = {
         
         //Construct redirect file for each page.
         var g = this;
-        console.log("CURRENT_LANG: ", current_language)
-        console.log("current_lang_pages: ", current_lang_pages)
+        //console.log("CURRENT_LANG: ", current_language)
+        //console.log("current_lang_pages: ", current_lang_pages)
         
         
         if (''==current_language) {
@@ -86,7 +86,9 @@ module.exports = {
                 page_path.pop();
                 page_path=page_path.join()+'.html';
                 //replace page path name to index.html if it is README.html (makes folder links work!)
-                page_path=page_path.replace('README.html','index.html')
+                if (page_path1='README.html') { //Do for every one except the one in the root.
+                page_path=page_path.replace('README.html','index.html');
+                }
                 //console.log("FROM Page: ", page_path)
                 
                 var redirect_page_url = g.output.toURL(page);
