@@ -69,6 +69,8 @@ module.exports = {
             //Otherwise the file gets written relative to the current output langauge path. 
             current_lang_pages.forEach(function(page) {
                 var redirect_page = '/' + redirect_language + '/' + page;
+                console.log("FROM Page: ", page.path )
+                console.log("TO Page: ", redirect_page )
                 g.output.writeFile(page, content(redirect_page));
             });
         }
