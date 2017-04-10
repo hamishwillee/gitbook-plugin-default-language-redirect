@@ -19,72 +19,42 @@ var content = function(path) {
 
 module.exports = {
   hooks: {
-    "page": function(page) {
-      
-      /* Get array of all the pages in the current language and save them */
-      
-      //Get redirect language from config (or 'en' if not specified)
-      var redirectConf = this.config.get("pluginsConfig.language-redirect");
-      var redirect_language = redirectConf.language || "en";
-      
-      // Infer current language using current output root. 
-      // Will either be "_book" (no language) or a language code
-      var current_language=this.output.root().split('\\').pop();
-      if (current_language=='_book') {
-         current_language='';
-         }
-      
-      // For current language save the redirect file name
-      if (redirect_language==current_language) {
-          //console.log("CURRENT Page: ", page.path )
-          //strip off the .mds and replace with .html (output path)
-          page_path=page.path;
-          page_path=page_path.split('.')
-          page_path.pop();
-          page_path=page_path.join()+'.html';
-          
-          page.content =  page.content + '<p>PAGE PATH: ' + page_path + '</p>'; //DEBUGGING
-          current_lang_pages.push(page_path)
-      }
-
-      return page;  
-      },
-      
-     /* THIS IS PURELY A TEST */
      
     "page:before": function(page) {
-        page.content = "# Title\n" +page.content;
         
+        /* Get array of all the pages in the current language and save them */
         
-              //Get redirect language from config (or 'en' if not specified)
-      var redirectConf = this.config.get("pluginsConfig.language-redirect");
-      var redirect_language = redirectConf.language || "en";
-      
-      page.content += "\n# REDIR: " + redirect_language + '\n';
-      
-      // Infer current language using current output root. 
-      // Will either be "_book" (no language) or a language code
-      var current_language=this.output.root().split('\\').pop();
-      if (current_language=='_book') {
-         current_language='';
-         }
+        var logtext = '';
          
-      page.content = "# CURR Lange: " + current_language + '\n' +page.content;
+        //Get redirect language from config (or 'en' if not specified)
+        var redirectConf = this.config.get("pluginsConfig.language-redirect");
+        var redirect_language = redirectConf.language || "en";
+      
+        logtext += "\nredirect_language: " + redirect_language + '\n';
+      
+        // Infer current language using current output root. 
+        // Will either be "_book" (no language) or a language code
+        var current_language=this.output.root().split('\\').pop().split('/').pop();
+        if (current_language=='_book') {
+            current_language='';
+            }
+         
+        logtext += "\ncurrent_language: " + current_language + '\n';
       
       // For current language save the redirect file name
-      if (redirect_language==current_language) {
+        if (redirect_language==current_language) {
           //console.log("CURRENT Page: ", page.path )
           //strip off the .mds and replace with .html (output path)
-          page_path=page.path;
-          page_path=page_path.split('.')
-          page_path.pop();
-          page_path=page_path.join()+'.html';
-          
-          page.content =  page.content + '<p>PAGE PATH2222: ' + page_path + '</p>'; //DEBUGGING
-          current_lang_pages.push(page_path)
-      }
+            page_path=page.path;
+            page_path=page_path.split('.')
+            page_path.pop();
+            page_path=page_path.join()+'.html';
+            logtext += "\npage_path: " + page_path + '\n';
+            current_lang_pages.push(page_path)
+        }
         
-        
+        page.content = "# DEBUG \n" + logtext + '\n' + page.content;
+        console.log("DEBUG: " + logtext)
         return page;
     },
       
@@ -109,8 +79,8 @@ module.exports = {
             //Otherwise the file gets written relative to the current output langauge path. 
             current_lang_pages.forEach(function(page) {
                 var redirect_page = '/' + redirect_language + '/' + page;
-                console.log("FROM Page: ", page)
-                console.log("TO Page: ", redirect_page )
+                //console.log("FROM Page: ", page)
+                //console.log("TO Page: ", redirect_page )
                 g.output.writeFile(page, content(redirect_page));
             });
         }
