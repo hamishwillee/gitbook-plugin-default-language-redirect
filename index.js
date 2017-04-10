@@ -86,7 +86,7 @@ module.exports = {
                 page_path.pop();
                 page_path=page_path.join()+'.html';
                 //replace page path name to index.html if it is README.html (makes folder links work!)
-                if (page_path1!='README.html') { //Do for every one except the one in the root.
+                if (page_path != 'README.html') { //Do for every one except the one in the root.
                 page_path=page_path.replace('README.html','index.html');
                 }
                 //console.log("FROM Page: ", page_path)
